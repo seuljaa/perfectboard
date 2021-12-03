@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Main {
   static int articlesLastId = 0;
+
   static void makeTestData(List<Article> articles) {
     for (int i = 0; i < 32; i++) {
       int id = i + 1;
@@ -39,7 +40,7 @@ public class Main {
       } else if (rq.getUrlPath().equals("/usr/article/detail")) {
         actionDetail(rq, articles);
       } else if (rq.getUrlPath().equals("/usr/article/write")) {
-       actionWrite(sc, articles);
+        actionWrite(sc, articles);
       } else {
         System.out.printf("입력된 명령어 : %s\n", cmd);
       }
@@ -117,18 +118,17 @@ public class Main {
           count++;
           go++;
         }
-      } else {List<Article> articlesReserve;
+      } else {
+        List<Article> articlesReserve;
         articlesReserve = Util.reverseList(articles);
-        while (go < articles.size()%10) {
+        while (go < articles.size() % 10) {
           Article article = articlesReserve.get(count);
           System.out.printf("%d / %s\n", article.id, article.title);
           count++;
           go++;
         }
       }
-    }
-
-    if (params.containsKey("searchKeyword")) {
+    } else if (params.containsKey("searchKeyword")) {
       String text = params.get("searchKeyword"); // 값을 text에 저장
       for (int i = articles.size() - 1; i >= 0; i--) {
         Article article = articles.get(i);
@@ -142,21 +142,20 @@ public class Main {
           }
         }
       }
-    }
-    if (params.containsKey("orderBy") && params.get("orderBy").equals("idAsc")) {
+    } else if (params.containsKey("orderBy") && params.get("orderBy").equals("idAsc")) {
       List<Article> articlesReserve;
       articlesReserve = Util.reverseList(articles);
       for (int i = articles.size() - 1; i >= 0; i--) {
         Article article = articlesReserve.get(i);
         System.out.printf("%d / %s\n", article.id, article.title);
       }
-    }
-    else{
+    } else {
       for (int i = articles.size() - 1; i >= 0; i--) { // 기본+Desc
         Article article = articles.get(i);
         System.out.printf("%d / %s\n", article.id, article.title);
       }
     }
+
 
   }
 }
